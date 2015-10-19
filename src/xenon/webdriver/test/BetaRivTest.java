@@ -43,8 +43,8 @@ public class BetaRivTest implements ITestStarter {
 		driver.findElement(By.id("loginLink")).click();
 		
 		Wait<WebDriver> wait = new WebDriverWait(driver, 200);
-        WebElement loginInput = wait.until(
-        		ExpectedConditions.visibilityOfElementLocated(By.name("login")));
+        WebElement loginInput = driver.findElement(By.name("login"));
+        wait.until(ExpectedConditions.visibilityOf(loginInput));
         
         loginInput.sendKeys("xenon22");
         driver.findElement(By.name("pass")).sendKeys("password");
