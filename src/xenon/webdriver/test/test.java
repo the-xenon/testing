@@ -5,8 +5,8 @@ package xenon.webdriver.test;
  */
 public class test {
     public static void main(String[] args) {
-        //bookTest();
-        rivTest();
+        bookTest();
+        //rivTest();
     }
 
     private static void bookTest() {

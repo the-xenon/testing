@@ -2,10 +2,13 @@ package xenon.webdriver.test;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,20 +18,50 @@ import java.util.Map;
 public class BookTest implements ITestStarter {
     @Override
     public void start() {
-        WebDriver driver = new FirefoxDriver();
-        driver.get("http://www.google.com");
-
-        WebElement searchBox = driver.findElement(By.name("q"));
-        searchBox.sendKeys(Keys.SHIFT, "s", "dfd");
-        searchBox.submit();
-
-        /*List<WebElement> inputs = driver.findElements(By.tagName("input"));
-        for (WebElement input : inputs) {
-            if (input.getAttribute("value").equals("ћне повезЄт!")) {
-                input.sendKeys(Keys.SHIFT, "sdfd");
-            }
-        }*/
+    	System.out.println("Working Directory = " +
+                System.getProperty("user.dir"));
+    	
+    	System.setProperty("webdriver.ie.driver", "..\\..\\drivers\\IEDriverServer.exe");
+    	
+    	DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
+		ieCapabilities.setCapability(
+				InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
+    			true);
+    	
+    	WebDriver driver = new InternetExplorerDriver(ieCapabilities);
+        driver.get("http://www.google.com/");
     }
+
+	private void getCookie() {
+		WebDriver driver = new FirefoxDriver();
+        driver.get("http://www.ragazzeinvendita.com/");
+
+        File file = new File("browser.data");
+        try {
+        	file.delete();
+        	file.createNewFile();
+        	FileWriter fileWriter = new FileWriter(file);
+        	BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        	
+        	for (Cookie cookie : driver.manage().getCookies()) {
+        		System.out.println(cookie.toString());
+        		bufferedWriter.write(
+        				cookie.getName() + ";" +
+        				cookie.getValue() + ";" +
+        				cookie.getDomain() + ";" +
+        				cookie.getPath() + ";" +
+        				cookie.getExpiry() + ";" +
+        				cookie.isSecure());
+        		bufferedWriter.newLine();
+        	}
+        	bufferedWriter.flush();
+        	bufferedWriter.close();
+        	fileWriter.close();
+        }
+        catch (Exception ex) {
+        	ex.printStackTrace();
+        }
+	}
 
     private static void navigateTest() {
         WebDriver driver = new FirefoxDriver();
