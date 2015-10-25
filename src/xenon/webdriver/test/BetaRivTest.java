@@ -28,18 +28,28 @@ public class BetaRivTest implements ITestStarter {
 
         checkAdultWarningDialogAndClose();
 
-        driver.findElement(By.id("loginLink")).click();
-        driver.findElement(By.name("login")).sendKeys("xenon22");
-        driver.findElement(By.name("pass")).sendKeys("password");
-        driver.findElement(By.id("lastField"));
-
-        WebDriverWait wait = new WebDriverWait(driver, 200);
-        //Wait<WebDriver> wait = new WebDriverWait(driver, 250);
-
-        /*WebDriverWait wait = new WebDriverWait(driver, 20);
-        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-        alert.authenticateUsing(new UserAndPassword("beta", "7sidQueplo"));*/
+        fillLoginFormAndSubmit();
+        
+        testResult();
     }
+
+	private void testResult() {
+		driver.findElement(By.id("profilePhoto"));
+        driver.findElement(By.id("userNick"));
+        driver.findElement(By.className("credits"));
+	}
+
+	private void fillLoginFormAndSubmit() {
+		driver.findElement(By.id("loginLink")).click();
+		
+		Wait<WebDriver> wait = new WebDriverWait(driver, 200);
+        WebElement loginInput = driver.findElement(By.name("login"));
+        wait.until(ExpectedConditions.visibilityOf(loginInput));
+        
+        loginInput.sendKeys("xenon22");
+        driver.findElement(By.name("pass")).sendKeys("password");
+        driver.findElement(By.id("lastField")).click();
+	}
 
     private void checkAdultWarningDialogAndClose() {
         WebElement enterButton = driver.findElement(By.className("agree-button"));
