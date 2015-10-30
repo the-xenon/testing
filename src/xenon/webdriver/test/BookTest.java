@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.BufferedWriter;
@@ -20,9 +21,9 @@ import java.util.Map;
 public class BookTest implements ITestStarter {
     @Override
     public void start() {
-    	System.out.println("Working Directory = " +
-                System.getProperty("user.dir"));
-    	
+    	/*System.out.println("Working Directory = " +
+                System.getProperty("user.dir"));*/
+    	FileHandler.isZipped("");
     }
 
 	private void chromeTest() {
