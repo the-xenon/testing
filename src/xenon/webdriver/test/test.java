@@ -7,6 +7,7 @@ public class test {
     public static void main(String[] args) {
         bookTest();
         //rivTest();
+    	//(new NgTest()).start();
     }
 
     private static void bookTest() {

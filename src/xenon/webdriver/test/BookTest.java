@@ -1,6 +1,7 @@
 package xenon.webdriver.test;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -15,13 +16,24 @@ import java.util.Map;
 /**
  * Created by xenon on 18.10.2015.
  */
+
 public class BookTest implements ITestStarter {
     @Override
     public void start() {
     	System.out.println("Working Directory = " +
                 System.getProperty("user.dir"));
     	
-    	System.setProperty("webdriver.ie.driver", "..\\..\\drivers\\IEDriverServer.exe");
+    }
+
+	private void chromeTest() {
+		System.setProperty("webdriver.chrome.driver", "..\\..\\drivers\\chromedriver.exe");
+    	
+    	WebDriver driver = new ChromeDriver();
+    	driver.get("http://www.yandex.ru/");
+	}
+
+	private void ieTest() {
+		System.setProperty("webdriver.ie.driver", "..\\..\\drivers\\IEDriverServer.exe");
     	
     	DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
 		ieCapabilities.setCapability(
@@ -30,7 +42,7 @@ public class BookTest implements ITestStarter {
     	
     	WebDriver driver = new InternetExplorerDriver(ieCapabilities);
         driver.get("http://www.google.com/");
-    }
+	}
 
 	private void getCookie() {
 		WebDriver driver = new FirefoxDriver();
