@@ -9,16 +9,14 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by xenon on 31.10.2015.
  */
-public class IndexPageObject {
-    WebDriver driver;
-
+public class IndexPageObject extends RivPageObject {
     @FindBy(id="loginLink")
     WebElement loginButton;
     @FindBy(className="agree-button")
     WebElement warningEnterButton;
 
-    public IndexPageObject(WebDriver driver) {
-        this.driver = driver;
+    public IndexPageObject(TestBrowser testBrowser) {
+        super(testBrowser);
     }
 
     public void navigate() {

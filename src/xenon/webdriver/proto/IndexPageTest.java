@@ -17,30 +17,30 @@ public class IndexPageTest {
     @Test
     public void authCorrectLoginPasswordCommonTest() {
 
-        TestBrowser browser = new TestBrowser();
+        TestBrowser browser = TestHelper.getTestBrowser();
         browser.navigateTo(Pages.INDEX);
         IndexPageObject indexPage = browser.getCurrentPageAs(IndexPageObject.class);
         LoginFormObject loginForm = indexPage.openLoginForm();
-        loginForm.loginAs("xenon22", "password");
+//        loginForm.loginAs("xenon22", "password");
         //browser.getCurrentPageAsLoggedInObject();
         //LoggedInPageObject loggedInPage = browser.getCurrentPageAs(LoggedInPageObject.class);
         //browser.currentPageIs(LoggedInPageObject.class);
-        browser.navigateTo(Pages.PRIVATE_PHOTOS);
-        PrivatePhotosPageObject privatePhotosPage = browser.getCurrentPageAs(PrivatePhotosPageObject.class);
+//        browser.navigateTo(Pages.PRIVATE_PHOTOS);
+//        PrivatePhotosPageObject privatePhotosPage = browser.getCurrentPageAs(PrivatePhotosPageObject.class);
 
-        IndexPageObject indexPage = RivSite
+        //IndexPageObject indexPage = RivSite
 
         //----------------------------
-        IndexPageObject indexPage = getIndexPage();
+/*        IndexPageObject indexPage = getIndexPage();
         indexPage.navigate();
         LoginFormObject loginForm = indexPage.openLoginForm();
         //UserIndexPage userIndexPage = loginForm.successfulLoginAs("xenon22", "password");
         RivPageObject rivPageObject = loginForm.loginAs("xenon22", "password");
-        LoggedInPageObject loggedInPage = new LoggedInPageObject(rivPageObject);
+        LoggedInPageObject loggedInPage = new LoggedInPageObject(rivPageObject);*/
 
         /*Assert.assertTrue(checkCommonIndexPage(userIndexPage));*/
 
-        userIndexPage.logout();
+        //userIndexPage.logout();
     }
 
     @Test
