@@ -1,16 +1,19 @@
 package xenon.webdriver.test;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.io.TemporaryFilesystem;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +26,38 @@ public class BookTest implements ITestStarter {
     public void start() {
     	/*System.out.println("Working Directory = " +
                 System.getProperty("user.dir"));*/
-    	FileHandler.isZipped("");
+    	
+    	//File tempDir = TemporaryFilesystem.getDefaultTmpFS().createTempDir("xen", "xen");
+    	TemporaryFilesystem.setTemporaryDirectory(new File("D://selenium_temp"));
+    	
+    	WebDriver driver = new FirefoxDriver();
+    	driver.get("http://beta:7sidQueplo@beta.ragazzeinvendita.com");
+    	
+    	
+    	//TemporaryFilesystem tempFS = TemporaryFilesystem.getTmpFsBasedOn(tempDir);
+    	
+    	/*File f = new File("D:\\ttt.png");
+    	try {
+			f.createNewFile();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}*/
+    	
+    	File screenShot = 
+    			((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+    	try {
+			FileUtils.copyFile(screenShot, new File("D://selenium_temp/rrr.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	/*try {
+			FileHandler.copy(screenShot, new File("D:\\ttt.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
+    	System.out.println(screenShot.getAbsolutePath());
+    	
     }
 
 	private void chromeTest() {
