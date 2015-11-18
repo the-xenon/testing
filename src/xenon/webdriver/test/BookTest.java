@@ -9,13 +9,17 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.io.TemporaryFilesystem;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by xenon on 18.10.2015.
@@ -27,6 +31,31 @@ public class BookTest implements ITestStarter {
     	/*System.out.println("Working Directory = " +
                 System.getProperty("user.dir"));*/
     	
+    	DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+    	//desiredCapabilities.setCapability("app", "D:\\Android\\selendroid\\test.apk");
+    	desiredCapabilities.setCapability("appPackage", "ru.nsk.ftc.bender");
+    	desiredCapabilities.setCapability("appActivity", "ru.ftc.bender.ui.screen.login.ean.ScreenCardEanEnterActivity");
+    	desiredCapabilities.setCapability("platformName", "Android");
+    	desiredCapabilities.setCapability("deviceName", "test");
+    	
+    	WebDriver webDriver = null;
+    	try {
+			webDriver = new RemoteWebDriver(
+					new URL("http://127.0.0.1:4723/wd/hub"), desiredCapabilities);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    	
+    	WebElement enterButton = webDriver.findElement(
+    			By.id("ru.nsk.ftc.bender:screen_card_ean_enter/button_enter"));
+    	//"ru.nsk.ftc.bender:screen_card_ean_enter/edit_text_ean"
+    	enterButton.click();
+    	
+    }
+    
+    private void fileTest() {
     	//File tempDir = TemporaryFilesystem.getDefaultTmpFS().createTempDir("xen", "xen");
     	TemporaryFilesystem.setTemporaryDirectory(new File("D://selenium_temp"));
     	
@@ -57,7 +86,6 @@ public class BookTest implements ITestStarter {
 			e.printStackTrace();
 		}*/
     	System.out.println(screenShot.getAbsolutePath());
-    	
     }
 
 	private void chromeTest() {

@@ -1,5 +1,8 @@
 package xenon.webdriver.test;
 
+import xenon.test.cft.LoginTest;
+import xenon.test.cft.TestDriver;
+
 /**
  * Created by xenon on 17.10.2015.
  */
