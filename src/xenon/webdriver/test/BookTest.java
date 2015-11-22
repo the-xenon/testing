@@ -6,10 +6,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +25,24 @@ public class BookTest implements ITestStarter {
     public void start() {
     	System.out.println("Working Directory = " +
                 System.getProperty("user.dir"));
+
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+        desiredCapabilities.setCapability("app", "D:\\Android\\selendroid\\test.apk");
+        //desiredCapabilities.setCapability("browserName", "Chrome");
+        desiredCapabilities.setCapability("platformName", "Android");
+        //desiredCapabilities.setCapability("deviceName", "091b142a00cabc26");
+        desiredCapabilities.setCapability("deviceName", "Nexus 5");
+
+        URL url = null;
+        try {
+            url = new URL("http://127.0.0.1:4723/wd/hub");
+        }
+        catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        WebDriver webDriver = new RemoteWebDriver(url, desiredCapabilities);
+        webDriver.get("http://www.lenta.ru");
     	
     }
 

@@ -19,7 +19,7 @@ public class IndexPageTest {
 
         TestBrowser browser = TestHelper.getTestBrowser();
         browser.navigateTo(Pages.INDEX);
-        IndexPageObject indexPage = browser.getCurrentPageAs(IndexPageObject.class);
+//        IndexPageObject indexPage = browser.getCurrentPageAs(IndexPageObject.class);
         LoginFormObject loginForm = indexPage.openLoginForm();
 //        loginForm.loginAs("xenon22", "password");
         //browser.getCurrentPageAsLoggedInObject();
@@ -65,7 +65,7 @@ public class IndexPageTest {
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         }
         if (indexPage == null || renew) {
-            indexPage = new IndexPageObject(driver);
+//            indexPage = new IndexPageObject(driver);
         }
         return indexPage;
     }
