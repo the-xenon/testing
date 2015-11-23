@@ -1,8 +1,9 @@
-package xenon.webdriver.proto;
+package xenon.webdriver.proto.riv;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
@@ -12,15 +13,27 @@ import java.util.concurrent.TimeUnit;
  */
 public class IndexPageTest {
     private IndexPageObject indexPage;
-    private WebDriver driver;
+    PageFactory pageFactory;
+    
+    @BeforeClass
+    public void BeforeIndexPageTests() {
+    	pageFactory = new PageFactory(DriverFactory.createDriver());
+    }
 
     @Test
     public void authCorrectLoginPasswordCommonTest() {
-
-        TestBrowser browser = TestHelper.getTestBrowser();
-        browser.navigateTo(Pages.INDEX);
+    	IndexPage indexPage = pageFactory.navigateToIndexPage();
+    	LoggedinPage loggedinPage = indexPage.login("xenon22", "password");
+    	
+    	Assert.assertTrue(loggedinPage.hasNicknameField("xenon22"));
+    	Assert.assertTrue(loggedinPage.hasCreditsField());
+    	
+    	loggedinPage.logout();
+    	
+//        TestBrowser browser = TestHelper.getTestBrowser();
+//        browser.navigateTo(Pages.INDEX);
 //        IndexPageObject indexPage = browser.getCurrentPageAs(IndexPageObject.class);
-        LoginFormObject loginForm = indexPage.openLoginForm();
+//        LoginFormObject loginForm = indexPage.openLoginForm();
 //        loginForm.loginAs("xenon22", "password");
         //browser.getCurrentPageAsLoggedInObject();
         //LoggedInPageObject loggedInPage = browser.getCurrentPageAs(LoggedInPageObject.class);
@@ -43,7 +56,7 @@ public class IndexPageTest {
         //userIndexPage.logout();
     }
 
-    @Test
+/*    @Test
     public void AuthCorrectLoginPasswordModelTest() {
         IndexPageObject indexPage = getIndexPage();
         indexPage.navigate();
@@ -68,5 +81,5 @@ public class IndexPageTest {
 //            indexPage = new IndexPageObject(driver);
         }
         return indexPage;
-    }
+    }*/
 }

@@ -1,4 +1,4 @@
-package xenon.webdriver.proto;
+package xenon.webdriver.proto.riv;
 
 /**
  * Created by xenon on 02.11.2015.

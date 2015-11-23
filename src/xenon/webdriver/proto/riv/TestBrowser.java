@@ -1,4 +1,4 @@
-package xenon.webdriver.proto;
+package xenon.webdriver.proto.riv;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
