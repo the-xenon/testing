@@ -14,10 +14,18 @@ public class LoginErrorPage {
         pageHelper.initElements(this);
     }
 
-    public boolean hasErrorField(String error) {
+    public boolean hasErrorFieldWithText(String error) {
         if (errorField.isDisplayed()) {
             return errorField.getText().contains(error);
         }
         return false;
+    }
+
+    public boolean hasErrorField() {
+        return errorField.isDisplayed();
+    }
+
+    public String getErrorFieldText() {
+        return errorField.getText();
     }
 }

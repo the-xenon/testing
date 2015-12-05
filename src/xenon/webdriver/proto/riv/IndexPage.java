@@ -5,7 +5,7 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class IndexPage {
+public class IndexPage extends BaseGuestRivPage {
 	@FindBy(id="loginField")
     private WebElement loginInput;
     @FindBy(id="passwordField")
@@ -13,19 +13,8 @@ public class IndexPage {
     @FindBy(id="loginButton")
     private WebElement loginButton;
     
-    @FindBy(className="enterButton")
-    private WebElement warningEnterButton;
-    @FindBy(className="ui-icon-closethick")
-    private List<WebElement> autologinCloseButtons;
-    
-    private PageHelper pageHelper;
-     
-	public IndexPage(PageHelper pageFactory) {
-		this.pageHelper = pageFactory;
-		pageFactory.initElements(this);
-		
-		checkAdultWarningDialogAndClose();
-		checkAutologinDialogAndClose();
+	public IndexPage(PageHelper pageHelper) {
+        super(pageHelper);
 	}
 
 	public LoggedinPage login(String login, String password) {
@@ -33,7 +22,7 @@ public class IndexPage {
 		passwordInput.sendKeys(password);
 		loginButton.click();
 		
-		return pageHelper.getPageAsLoggedinPage();
+		return getPageHelper().getPageAsLoggedinPage();
 	}
 
     public LoginErrorPage incorrectLogin(String login, String password) {
@@ -41,23 +30,6 @@ public class IndexPage {
         passwordInput.sendKeys(password);
         loginButton.click();
 
-        return pageHelper.getPageAsErrorPage();
+        return getPageHelper().getPageAsErrorPage();
     }
-	
-	private boolean checkAdultWarningDialogAndClose() {
-        if (warningEnterButton.isDisplayed()) {
-            warningEnterButton.click();
-            return true;
-        }
-        return false;
-    }
-	
-	private boolean checkAutologinDialogAndClose() {
-        if (autologinCloseButtons.size() != 0) {
-        	autologinCloseButtons.get(0).click();
-            return true;
-        }
-        return false;
-    }
-
 }

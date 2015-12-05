@@ -9,15 +9,9 @@ public class PageHelper {
 		this.driver = driver;
 	}
 
-	public IndexPage navigateToIndexPage() {
-		navigateTo(Pages.LOGOUT);
-		navigateTo(Pages.INDEX);
-		return new IndexPage(this);
-	}
-
 	private void navigateTo(String path) {
 		// driver.get("http://beta:7sidQueplo@beta.ragazzeinvendita.com");
-		driver.get("http://www.ragazzeinvendita.com" + path);
+		driver.get("http://www.ragazzeinvendita.com/it" + path);
 	}
 
 	public void initElements(Object page) {
@@ -32,5 +26,16 @@ public class PageHelper {
 	public LoginErrorPage getPageAsErrorPage() {
 		return new LoginErrorPage(this);
 	}
-	
+
+	public IndexPage navigateToIndexPage() {
+		navigateTo(Pages.LOGOUT);
+		navigateTo(Pages.INDEX);
+		return new IndexPage(this);
+	}
+
+	public CommonRegistrationPage navigateToCommonRegistrationPage() {
+		navigateTo(Pages.LOGOUT);
+		navigateTo(Pages.COMMON_REGISTRATION);
+		return new CommonRegistrationPage(this);
+	}
 }
