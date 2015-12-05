@@ -12,9 +12,14 @@ public class IndexPage extends BaseGuestRivPage {
     private WebElement passwordInput;
     @FindBy(id="loginButton")
     private WebElement loginButton;
+
+    @FindBy(className="ui-icon-closethick")
+    private List<WebElement> autologinCloseButtons;
     
 	public IndexPage(PageHelper pageHelper) {
         super(pageHelper);
+
+        checkAutologinDialogAndClose();
 	}
 
 	public LoggedinPage login(String login, String password) {
@@ -31,5 +36,13 @@ public class IndexPage extends BaseGuestRivPage {
         loginButton.click();
 
         return getPageHelper().getPageAsErrorPage();
+    }
+
+    private boolean checkAutologinDialogAndClose() {
+        if (autologinCloseButtons.size() != 0) {
+            autologinCloseButtons.get(0).click();
+            return true;
+        }
+        return false;
     }
 }

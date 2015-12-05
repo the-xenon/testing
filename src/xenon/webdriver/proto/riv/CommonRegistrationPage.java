@@ -54,6 +54,7 @@ public class CommonRegistrationPage extends BaseGuestRivPage {
         monthDropdown.selectByIndex(calendar.get(Calendar.MONTH));
         Select yearDropdown = new Select(yearInput);
         yearDropdown.selectByValue(String.valueOf(calendar.get(Calendar.YEAR)));
+        // http://sqa.stackexchange.com/questions/12029/how-do-i-work-with-dropdowns-in-selenium-webdriver
 
         rulesConfirmationCheckbox.click();
     }

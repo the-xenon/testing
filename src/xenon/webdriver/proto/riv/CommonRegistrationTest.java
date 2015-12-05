@@ -15,6 +15,5 @@ public class CommonRegistrationTest {
 
         RivUser user = userHelper.generateValidCommon();
         regPage.register(user.getLogin(), user.getNickname(), user.getPassword(), user.getEmail(), user.getBirthday());
-
     }
 }
