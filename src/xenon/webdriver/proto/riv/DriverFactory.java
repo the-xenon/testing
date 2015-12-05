@@ -9,7 +9,7 @@ public class DriverFactory {
 
 	public static WebDriver createDriver() {
 		WebDriver driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		
 		return driver;
 	}

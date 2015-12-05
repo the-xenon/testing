@@ -18,10 +18,10 @@ public class IndexPage {
     @FindBy(className="ui-icon-closethick")
     private List<WebElement> autologinCloseButtons;
     
-    private PageFactory pageFactory;
+    private PageHelper pageHelper;
      
-	public IndexPage(PageFactory pageFactory) {
-		this.pageFactory = pageFactory;
+	public IndexPage(PageHelper pageFactory) {
+		this.pageHelper = pageFactory;
 		pageFactory.initElements(this);
 		
 		checkAdultWarningDialogAndClose();
@@ -33,11 +33,23 @@ public class IndexPage {
 		passwordInput.sendKeys(password);
 		loginButton.click();
 		
-		return pageFactory.getPageAsLoggedinPage();
+		return pageHelper.getPageAsLoggedinPage();
 	}
+
+    public LoginErrorPage incorrectLogin(String login, String password) {
+        loginInput.sendKeys(login);
+        passwordInput.sendKeys(password);
+        loginButton.click();
+
+        return pageHelper.getPageAsErrorPage();
+    }
 	
-	private void checkAdultWarningDialogAndClose() {
-        warningEnterButton.click();
+	private boolean checkAdultWarningDialogAndClose() {
+        if (warningEnterButton.isDisplayed()) {
+            warningEnterButton.click();
+            return true;
+        }
+        return false;
     }
 	
 	private boolean checkAutologinDialogAndClose() {
@@ -47,4 +59,5 @@ public class IndexPage {
         }
         return false;
     }
+
 }

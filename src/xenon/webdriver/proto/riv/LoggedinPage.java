@@ -8,12 +8,14 @@ public class LoggedinPage {
     private WebElement loginText;
     @FindBy(id="credits-info")
     private WebElement creditsText;
+	@FindBy(id="revenue-info")
+	private WebElement revenueText;
     @FindBy(xpath=".//*[@id='logoutLink']/a")
     private WebElement logoutLink;
     
-    private PageFactory pageFactory;
+    private PageHelper pageFactory;
      
-	public LoggedinPage(PageFactory pageFactory) {
+	public LoggedinPage(PageHelper pageFactory) {
 		this.pageFactory = pageFactory;
 		pageFactory.initElements(this);
 	}
@@ -24,6 +26,10 @@ public class LoggedinPage {
 
 	public boolean hasCreditsField() {
 		return creditsText.isDisplayed();
+	}
+
+	public boolean hasRevenueField() {
+		return revenueText.isDisplayed();
 	}
 
 	public void logout() {

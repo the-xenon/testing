@@ -2,10 +2,10 @@ package xenon.webdriver.proto.riv;
 
 import org.openqa.selenium.WebDriver;
 
-public class PageFactory {
+public class PageHelper {
 	private WebDriver driver;
 
-	public PageFactory(WebDriver driver) {
+	public PageHelper(WebDriver driver) {
 		this.driver = driver;
 	}
 
@@ -16,6 +16,7 @@ public class PageFactory {
 	}
 
 	private void navigateTo(String path) {
+		// driver.get("http://beta:7sidQueplo@beta.ragazzeinvendita.com");
 		driver.get("http://www.ragazzeinvendita.com" + path);
 	}
 
@@ -26,6 +27,10 @@ public class PageFactory {
 
 	public LoggedinPage getPageAsLoggedinPage() {
 		return new LoggedinPage(this);
+	}
+
+	public LoginErrorPage getPageAsErrorPage() {
+		return new LoginErrorPage(this);
 	}
 	
 }

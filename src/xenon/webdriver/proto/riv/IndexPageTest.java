@@ -1,85 +1,83 @@
 package xenon.webdriver.proto.riv;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by xenon on 31.10.2015.
  */
 public class IndexPageTest {
-    private IndexPageObject indexPage;
-    PageFactory pageFactory;
+    PageHelper pageHelper = new PageHelper(DriverFactory.createDriver());
+    UserHelper userHelper = new UserHelper();
     
-    @BeforeClass
-    public void BeforeIndexPageTests() {
-    	pageFactory = new PageFactory(DriverFactory.createDriver());
-    }
+    /*@AfterClass
+    public void close() {
+        pageHelper.close();
+    }*/
 
     @Test
     public void authCorrectLoginPasswordCommonTest() {
-    	IndexPage indexPage = pageFactory.navigateToIndexPage();
-    	LoggedinPage loggedinPage = indexPage.login("xenon22", "password");
+    	IndexPage indexPage = pageHelper.navigateToIndexPage();
+
+        RivUser user = userHelper.getValidCommon();
+    	LoggedinPage loggedinPage = indexPage.login(user.getLogin(), user.getPassword());
     	
-    	Assert.assertTrue(loggedinPage.hasNicknameField("xenon22"));
+    	Assert.assertTrue(loggedinPage.hasNicknameField(user.getNickname()));
     	Assert.assertTrue(loggedinPage.hasCreditsField());
     	
     	loggedinPage.logout();
-    	
-//        TestBrowser browser = TestHelper.getTestBrowser();
-//        browser.navigateTo(Pages.INDEX);
-//        IndexPageObject indexPage = browser.getCurrentPageAs(IndexPageObject.class);
-//        LoginFormObject loginForm = indexPage.openLoginForm();
-//        loginForm.loginAs("xenon22", "password");
-        //browser.getCurrentPageAsLoggedInObject();
-        //LoggedInPageObject loggedInPage = browser.getCurrentPageAs(LoggedInPageObject.class);
-        //browser.currentPageIs(LoggedInPageObject.class);
-//        browser.navigateTo(Pages.PRIVATE_PHOTOS);
-//        PrivatePhotosPageObject privatePhotosPage = browser.getCurrentPageAs(PrivatePhotosPageObject.class);
-
-        //IndexPageObject indexPage = RivSite
-
-        //----------------------------
-/*        IndexPageObject indexPage = getIndexPage();
-        indexPage.navigate();
-        LoginFormObject loginForm = indexPage.openLoginForm();
-        //UserIndexPage userIndexPage = loginForm.successfulLoginAs("xenon22", "password");
-        RivPageObject rivPageObject = loginForm.loginAs("xenon22", "password");
-        LoggedInPageObject loggedInPage = new LoggedInPageObject(rivPageObject);*/
-
-        /*Assert.assertTrue(checkCommonIndexPage(userIndexPage));*/
-
-        //userIndexPage.logout();
     }
 
-/*    @Test
-    public void AuthCorrectLoginPasswordModelTest() {
-        IndexPageObject indexPage = getIndexPage();
-        indexPage.navigate();
-        LoginFormObject loginForm = indexPage.openLoginForm();
-        UserIndexPage userIndexPage = loginForm.successfulLoginAs("xenon111", "password");
+    @Test
+    public void authCorrectLoginPasswordModelTest() {
+        IndexPage indexPage = pageHelper.navigateToIndexPage();
 
-        //Assert.assertTrue(checkModelIndexPage(userIndexPage));
+        RivUser user = userHelper.getValidModel();
+        LoggedinPage loggedinPage = indexPage.login(user.getLogin(), user.getPassword());
 
-        userIndexPage.logout();
+        Assert.assertTrue(loggedinPage.hasNicknameField(user.getNickname()));
+        Assert.assertTrue(loggedinPage.hasRevenueField());
+
+        loggedinPage.logout();
     }
 
-    private IndexPageObject getIndexPage() {
-        return getIndexPage(false);
+    @Test
+    public void authEmptyLoginTest() {
+        IndexPage indexPage = pageHelper.navigateToIndexPage();
+
+        RivUser user = userHelper.getValidCommon();
+        LoginErrorPage errorPage = indexPage.incorrectLogin("", user.getPassword());
+
+        Assert.assertTrue(errorPage.hasErrorField("Il campo login non è compilato."));
     }
 
-    private IndexPageObject getIndexPage(boolean renew) {
-        if (driver == null || renew) {
-            driver = new FirefoxDriver();
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        }
-        if (indexPage == null || renew) {
-//            indexPage = new IndexPageObject(driver);
-        }
-        return indexPage;
-    }*/
+    @Test
+    public void authWrongLoginTest() {
+        IndexPage indexPage = pageHelper.navigateToIndexPage();
+
+        RivUser user = userHelper.getValidModel();
+        LoginErrorPage errorPage = indexPage.incorrectLogin("aksgh2jghksfgk2hg4k2j4gh", user.getPassword());
+
+        Assert.assertTrue(errorPage.hasErrorField("Nessun utente nel sistema"));
+    }
+
+    @Test
+    public void authEmptyPasswordTest() {
+        IndexPage indexPage = pageHelper.navigateToIndexPage();
+
+        RivUser user = userHelper.getValidCommon();
+        LoginErrorPage errorPage = indexPage.incorrectLogin(user.getLogin(), "");
+
+        Assert.assertTrue(errorPage.hasErrorField("Password errata"));
+    }
+
+    @Test
+    public void authWrongPasswordTest() {
+        IndexPage indexPage = pageHelper.navigateToIndexPage();
+
+        RivUser user = userHelper.getValidModel();
+        LoginErrorPage errorPage = indexPage.incorrectLogin(user.getLogin(), "aksgh2jghksfgk2hg4k2j4gh");
+
+        Assert.assertTrue(errorPage.hasErrorField("Password errata"));
+    }
 }
