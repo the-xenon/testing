@@ -9,7 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class DriverFactory {
 
 	public static WebDriver createDriver() {
-		//WebDriver driver = new FirefoxDriver();
+		/*WebDriver driver = new FirefoxDriver();*/
 		System.setProperty("webdriver.chrome.driver", "..\\..\\drivers\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 

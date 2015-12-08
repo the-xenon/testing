@@ -22,7 +22,7 @@ public class LoginTest {
         RivUser user = userHelper.getExistingCommon();
     	LoggedinPage loggedinPage = indexPage.login(user.getLogin(), user.getPassword());
     	
-    	Assert.assertTrue(loggedinPage.hasNicknameField(user.getNickname()));
+    	Assert.assertTrue(loggedinPage.hasNicknameFieldWithNick(user.getNickname()));
     	Assert.assertTrue(loggedinPage.hasCreditsField());
     	
     	loggedinPage.logout();
@@ -35,7 +35,7 @@ public class LoginTest {
         RivUser user = userHelper.getExistingModel();
         LoggedinPage loggedinPage = indexPage.login(user.getLogin(), user.getPassword());
 
-        Assert.assertTrue(loggedinPage.hasNicknameField(user.getNickname()));
+        Assert.assertTrue(loggedinPage.hasNicknameFieldWithNick(user.getNickname()));
         Assert.assertTrue(loggedinPage.hasRevenueField());
 
         loggedinPage.logout();

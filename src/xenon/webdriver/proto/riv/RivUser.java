@@ -10,7 +10,9 @@ public class RivUser {
     private String nickname;
     private String password;
     private String email;
-    private Date birthday;
+    private Integer birthDay;
+    private Integer birthMonth;
+    private Integer birthYear;
 
     public RivUser(String login, String nickname, String password) {
         this.login = login;
@@ -18,12 +20,14 @@ public class RivUser {
         this.password = password;
     }
 
-    public RivUser(String login, String nickname, String password, String email, Date birthday) {
+    public RivUser(String login, String nickname, String password, String email, Integer birthDay, Integer birthMonth, Integer birthYear) {
         this.login = login;
         this.nickname = nickname;
         this.password = password;
         this.email = email;
-        this.birthday = birthday;
+        this.birthDay = birthDay;
+        this.birthMonth = birthMonth;
+        this.birthYear = birthYear;
     }
 
     public String getLogin() {
@@ -42,7 +46,43 @@ public class RivUser {
         return email;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public Integer getBirthDay() {
+        return birthDay;
+    }
+
+    public Integer getBirthMonth() {
+        return birthMonth;
+    }
+
+    public Integer getBirthYear() {
+        return birthYear;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setBirthDay(Integer birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public void setBirthMonth(Integer birthMonth) {
+        this.birthMonth = birthMonth;
+    }
+
+    public void setBirthYear(Integer birthYear) {
+        this.birthYear = birthYear;
     }
 }

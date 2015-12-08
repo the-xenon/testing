@@ -11,7 +11,7 @@ public class PageHelper {
 
 	private void navigateTo(String path) {
 		// driver.get("http://beta:7sidQueplo@beta.ragazzeinvendita.com");
-		driver.get("http://www.ragazzeinvendita.com/it" + path);
+		driver.get("http://riv3.xenon.nginx-test.vda-team.com/it" + path);
 	}
 
 	public void initElements(Object page) {

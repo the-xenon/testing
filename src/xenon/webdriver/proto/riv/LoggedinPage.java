@@ -12,15 +12,14 @@ public class LoggedinPage {
 	private WebElement revenueText;
     @FindBy(xpath=".//*[@id='logoutLink']/a")
     private WebElement logoutLink;
+	@FindBy(className="userNotification1")
+	private WebElement notificationField;
     
-    private PageHelper pageFactory;
-     
-	public LoggedinPage(PageHelper pageFactory) {
-		this.pageFactory = pageFactory;
-		pageFactory.initElements(this);
+	public LoggedinPage(PageHelper pageHelper) {
+		pageHelper.initElements(this);
 	}
 
-	public boolean hasNicknameField(String nickname) {
+	public boolean hasNicknameFieldWithNick(String nickname) {
 		return loginText.getText().equals(nickname);
 	}
 
@@ -30,6 +29,10 @@ public class LoggedinPage {
 
 	public boolean hasRevenueField() {
 		return revenueText.isDisplayed();
+	}
+
+	public boolean hasNotificationFieldWithText(String notification) {
+		return notificationField.getText().contains(notification);
 	}
 
 	public void logout() {

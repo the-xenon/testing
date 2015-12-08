@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by xenon on 05.12.2015.
  */
-public class CommonRegistrationPage extends BaseGuestRivPage {
+public class CommonRegistrationPage extends RegistrationErrorPage {
     @FindBy(id="login")
     private WebElement loginInput;
     @FindBy(id="nick")
@@ -38,14 +38,53 @@ public class CommonRegistrationPage extends BaseGuestRivPage {
         super(pageHelper);
     }
 
-    public void register(String login, String nickname, String password, String email, Date birthday) {
+    /*public LoggedinPage register(String login, String nickname, String password, String email, Date birthday) {
+        fillFieldsAndSubmit(login, nickname, password, email, birthday);
+        return getPageHelper().getPageAsLoggedinPage();
+    }
+
+    public RegistrationErrorPage incorrectRegistration(
+            String login, String nickname, String password, String email, Date birthday) {
+        fillFieldsAndSubmit(login, nickname, password, email, birthday);
+        return this;
+    }*/
+
+    public RegistrationErrorPage incorrectRegistration(RivUser user, String passwordConfirmation, boolean confirmRules) {
+        fillFieldsAndSubmit(
+                user.getLogin(),
+                user.getNickname(),
+                user.getPassword(),
+                passwordConfirmation,
+                user.getEmail(),
+                user.getBirthDay(),
+                user.getBirthMonth(),
+                user.getBirthYear(),
+                confirmRules);
+        return this;
+    }
+
+    public LoggedinPage register(RivUser user) {
+        fillFieldsAndSubmit(
+                user.getLogin(),
+                user.getNickname(),
+                user.getPassword(),
+                user.getPassword(),
+                user.getEmail(),
+                user.getBirthDay(),
+                user.getBirthMonth(),
+                user.getBirthYear(),
+                true);
+        return getPageHelper().getPageAsLoggedinPage();
+    }
+
+    private void fillFieldsAndSubmit(String login, String nickname, String password, String passwordConfirmation, String email, Integer birthDay, Integer birthMonth, Integer birthYear, boolean confirmRules) {
         loginInput.sendKeys(login);
         nickInput.sendKeys(nickname);
         passwordInput.sendKeys(password);
-        confirmPasswordInput.sendKeys(password);
+        confirmPasswordInput.sendKeys(passwordConfirmation);
         emailInput.sendKeys(email);
 
-        Calendar calendar = Calendar.getInstance();
+        /*Calendar calendar = Calendar.getInstance();
         calendar.setTime(birthday);
 
         Select dayDropdown = new Select(dayInput);
@@ -53,9 +92,19 @@ public class CommonRegistrationPage extends BaseGuestRivPage {
         Select monthDropdown = new Select(monthInput);
         monthDropdown.selectByIndex(calendar.get(Calendar.MONTH));
         Select yearDropdown = new Select(yearInput);
-        yearDropdown.selectByValue(String.valueOf(calendar.get(Calendar.YEAR)));
+        yearDropdown.selectByValue(String.valueOf(calendar.get(Calendar.YEAR)));*/
+        Select dayDropdown = new Select(dayInput);
+        dayDropdown.selectByIndex(birthDay);
+        Select monthDropdown = new Select(monthInput);
+        monthDropdown.selectByIndex(birthMonth);
+        Select yearDropdown = new Select(yearInput);
+        yearDropdown.selectByValue(birthYear.toString());
         // http://sqa.stackexchange.com/questions/12029/how-do-i-work-with-dropdowns-in-selenium-webdriver
 
-        rulesConfirmationCheckbox.click();
+        if (confirmRules) {
+            rulesConfirmationCheckbox.click();
+        }
+
+        submitButton.click();
     }
 }
