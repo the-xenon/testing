@@ -1,20 +1,16 @@
 package xenon.webdriver.proto.riv;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
-/**
- * Created by xenon on 29.11.2015.
- */
 public class UserHelper {
     public RivUser getExistingCommon() {
         return new RivUser("xenon22", "xenon22", "password");
     }
 
     public RivUser getExistingModel() {
-        return new RivUser("xenon111", "xenon1111", "password");
+        return new RivUser("xenon111", "xenon111", "password");
     }
 
     public RivUser generateValidCommon() {

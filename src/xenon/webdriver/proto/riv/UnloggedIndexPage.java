@@ -5,7 +5,7 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class IndexPage extends BaseGuestRivPage {
+public class UnloggedIndexPage extends BaseGuestRivPage {
 	@FindBy(id="loginField")
     private WebElement loginInput;
     @FindBy(id="passwordField")
@@ -16,7 +16,7 @@ public class IndexPage extends BaseGuestRivPage {
     @FindBy(className="ui-icon-closethick")
     private List<WebElement> autologinCloseButtons;
     
-	public IndexPage(PageHelper pageHelper) {
+	public UnloggedIndexPage(PageHelper pageHelper) {
         super(pageHelper);
 
         checkAutologinDialogAndClose();

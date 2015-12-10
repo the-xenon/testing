@@ -27,10 +27,9 @@ public class PageHelper {
 		return new LoginErrorPage(this);
 	}
 
-	public IndexPage navigateToIndexPage() {
+	public UnloggedIndexPage navigateToUnloggedIndexPage() {
 		navigateTo(Pages.LOGOUT);
-		navigateTo(Pages.INDEX);
-		return new IndexPage(this);
+		return new UnloggedIndexPage(this);
 	}
 
 	public CommonRegistrationPage navigateToCommonRegistrationPage() {
