@@ -3,9 +3,6 @@ package xenon.webdriver.proto.riv;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-/**
- * Created by xenon on 29.11.2015.
- */
 public class LoginErrorPage {
     @FindBy(className="error")
     private WebElement errorField;

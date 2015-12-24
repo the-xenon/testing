@@ -5,9 +5,6 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-/**
- * Created by xenon on 05.12.2015.
- */
 public abstract class BaseRivPage {
     private PageHelper pageHelper;
 

@@ -2,9 +2,6 @@ package xenon.webdriver.proto.riv;
 
 import java.util.Date;
 
-/**
- * Created by xenon on 29.11.2015.
- */
 public class RivUser {
     private String login;
     private String nickname;
