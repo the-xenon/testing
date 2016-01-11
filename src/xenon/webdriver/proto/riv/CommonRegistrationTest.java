@@ -12,6 +12,13 @@ public class CommonRegistrationTest {
     final String MSG_LOGIN_SHORT = "Login: La lunghezza del campo deve essere: 3..25";
     final String MSG_LOGIN_EMPTY = "Non hai compilato i seguenti campi: Login";
     final String MSG_LOGIN_INVALID = "Login: Formato Campo non valido";
+    final String MSG_NICK_EMPTY = "Non hai compilato i seguenti campi: Nick";
+    final String MSG_PASSWORD_EMPTY = "Non hai compilato i seguenti campi: Password";
+    final String MSG_EMAIL_EMPTY = "Non hai compilato i seguenti campi: Email";
+    final String MSG_BIRTHDAY_EMPTY = "Non hai compilato i seguenti campi: Compleanno";
+    final String MSG_RULES_NON_CHECKED = "Non hai compilato i seguenti campi: Confermo di aver letto ed accettato tutte i regolamenti";
+    final String MSG_PASSWORD_CONFIRMATION_WRONG = "La Password e la conferma Password sono differenti";
+    final String MSG_PASSWORD_CONFIRMATION_EMPTY = "Non hai compilato i seguenti campi: Conferma password";
 
     //@Test
     public void positive() {
@@ -51,99 +58,134 @@ public class CommonRegistrationTest {
 
         Assert.assertTrue(
                 errorPage.hasErrorFieldWithText(errorMessage),
-                "Unable to find error message '" + errorMessage + "' for wrong login '" + login +"'.");
+                "Unable to find error message '" + errorMessage + "' for wrong login '" + login +"'."
+        );
     }
-/*
-    @Test
-    public void negativeEmptyNick() {
+
+    @DataProvider(name = "wrongNick")
+    public Object[][] wrongNickData() {
+        return new Object[][] {
+                {"", MSG_NICK_EMPTY}
+        };
+    }
+
+    @Test(dataProvider = "wrongNick")
+    public void negativeWrongNick(String nick, String errorMessage) {
         CommonRegistrationPage regPage = pageHelper.navigateToCommonRegistrationPage();
 
         RivUser user = userHelper.generateValidCommon();
-        user.setNickname("");
+        user.setNickname(nick);
         RegistrationErrorPage errorPage = regPage.incorrectRegistration(user, user.getPassword(), true);
 
-        Assert.assertTrue(errorPage.hasErrorFieldWithText(
-                "Non hai compilato i seguenti campi: Nick"
-        ));
+        Assert.assertTrue(
+                errorPage.hasErrorFieldWithText(errorMessage),
+                "Unable to find error message '" + errorMessage + "' for wrong nick '" + nick +"'."
+        );
     }
 
-    @Test
-    public void negativeEmptyPassword() {
+    @DataProvider(name = "wrongPassword")
+    public Object[][] wrongPasswordData() {
+        return new Object[][] {
+                {"", MSG_PASSWORD_EMPTY}
+        };
+    }
+
+    @Test(dataProvider = "wrongPassword")
+    public void negativeWrongPassword(String password, String errorMessage) {
         CommonRegistrationPage regPage = pageHelper.navigateToCommonRegistrationPage();
 
         RivUser user = userHelper.generateValidCommon();
-        user.setPassword("");
+        user.setPassword(password);
         RegistrationErrorPage errorPage = regPage.incorrectRegistration(user, user.getPassword(), true);
 
-        Assert.assertTrue(errorPage.hasErrorFieldWithText(
-                "Non hai compilato i seguenti campi: Password"
-        ));
+        Assert.assertTrue(
+                errorPage.hasErrorFieldWithText(errorMessage),
+                "Unable to find error message '" + errorMessage + "' for wrong password '" + password +"'."
+        );
     }
 
+    @DataProvider(name = "wrongEmail")
+    public Object[][] wrongEmailData() {
+        return new Object[][] {
+                {"", MSG_EMAIL_EMPTY}
+        };
+    }
 
-
-    @Test
-    public void negativeEmptyEmail() {
+    @Test(dataProvider = "wrongEmail")
+    public void negativeWrongEmail(String email, String errorMessage) {
         CommonRegistrationPage regPage = pageHelper.navigateToCommonRegistrationPage();
 
         RivUser user = userHelper.generateValidCommon();
-        user.setEmail("");
+        user.setEmail(email);
         RegistrationErrorPage errorPage = regPage.incorrectRegistration(user, user.getPassword(), true);
 
-        Assert.assertTrue(errorPage.hasErrorFieldWithText(
-                "Non hai compilato i seguenti campi: Email"
-        ));
-    }*/
+        Assert.assertTrue(
+                errorPage.hasErrorFieldWithText(errorMessage),
+                "Unable to find error message '" + errorMessage + "' for wrong email '" + email +"'."
+        );
+    }
 
-    @Test
-    public void negativeEmptyPasswordConfirmation() {
+    @DataProvider(name = "wrongPasswordConfirmation")
+    public Object[][] wrongPasswordConfirmationData() {
+        return new Object[][] {
+                {"", MSG_PASSWORD_CONFIRMATION_EMPTY},
+                {"wrongconfirmation", MSG_PASSWORD_CONFIRMATION_WRONG}
+        };
+    }
+
+    @Test(dataProvider = "wrongPasswordConfirmation")
+    public void negativeEmptyPasswordConfirmation(String password, String errorMessage) {
         CommonRegistrationPage regPage = pageHelper.navigateToCommonRegistrationPage();
 
         RivUser user = userHelper.generateValidCommon();
-        RegistrationErrorPage errorPage = regPage.incorrectRegistration(user, "", true);
+        RegistrationErrorPage errorPage = regPage.incorrectRegistration(user, password, true);
 
-        Assert.assertTrue(errorPage.hasErrorFieldWithText(
-                "Non hai compilato i seguenti campi: Conferma password"
-        ));
+        Assert.assertTrue(
+                errorPage.hasErrorFieldWithText(errorMessage),
+                "Unable to find error message '" + errorMessage + "' for wrong password confirmation '" + password +"'."
+        );
     }
 
     @Test
-    public void negativeEmptyBirthdayDay() {
+    public void negativeEmptyBirthDay() {
         CommonRegistrationPage regPage = pageHelper.navigateToCommonRegistrationPage();
 
         RivUser user = userHelper.generateValidCommon();
         user.setBirthDay(null);
         RegistrationErrorPage errorPage = regPage.incorrectRegistration(user, user.getPassword(), true);
 
-        Assert.assertTrue(errorPage.hasErrorFieldWithText(
-                "Non hai compilato i seguenti campi: Compleanno"
-        ));
+        Assert.assertTrue(
+                errorPage.hasErrorFieldWithText(MSG_BIRTHDAY_EMPTY),
+                "Unable to find error message '" + MSG_BIRTHDAY_EMPTY + "' for empty birth day"
+        );
     }
 
     @Test
-    public void negativeEmptyBirthdayMonth() {
+    public void negativeEmptyBirthMonth() {
         CommonRegistrationPage regPage = pageHelper.navigateToCommonRegistrationPage();
 
         RivUser user = userHelper.generateValidCommon();
         user.setBirthMonth(null);
         RegistrationErrorPage errorPage = regPage.incorrectRegistration(user, user.getPassword(), true);
 
-        Assert.assertTrue(errorPage.hasErrorFieldWithText(
-                "Non hai compilato i seguenti campi: Compleanno"
-        ));
+        Assert.assertTrue(
+                errorPage.hasErrorFieldWithText(MSG_BIRTHDAY_EMPTY),
+                "Unable to find error message '" + MSG_BIRTHDAY_EMPTY + "' for empty birth month"
+        );
     }
 
     @Test
-    public void negativeEmptyBirthdayYear() {
+    public void negativeEmptyBirthYear() {
         CommonRegistrationPage regPage = pageHelper.navigateToCommonRegistrationPage();
 
         RivUser user = userHelper.generateValidCommon();
         user.setBirthYear(null);
         RegistrationErrorPage errorPage = regPage.incorrectRegistration(user, user.getPassword(), true);
 
-        Assert.assertTrue(errorPage.hasErrorFieldWithText(
-                "Non hai compilato i seguenti campi: Compleanno"
-        ));
+        Assert.assertTrue(
+                errorPage.hasErrorFieldWithText(MSG_BIRTHDAY_EMPTY),
+                "Unable to find error message '" + MSG_BIRTHDAY_EMPTY + "' for empty birth year"
+        );
     }
 
     @Test
@@ -153,8 +195,9 @@ public class CommonRegistrationTest {
         RivUser user = userHelper.generateValidCommon();
         RegistrationErrorPage errorPage = regPage.incorrectRegistration(user, user.getPassword(), false);
 
-        Assert.assertTrue(errorPage.hasErrorFieldWithText(
-                "Non hai compilato i seguenti campi: Confermo di aver letto ed accettato tutte i regolamenti"
-        ));
+        Assert.assertTrue(
+                errorPage.hasErrorFieldWithText(MSG_RULES_NON_CHECKED),
+                "Unable to find error message '" + MSG_RULES_NON_CHECKED + "' for non checked rules confirmation checkbox"
+        );
     }
 }
